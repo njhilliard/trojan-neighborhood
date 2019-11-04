@@ -1,5 +1,8 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 import matplotlib as mpl
-mpl.use('Agg')
+#mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 #import readsnap as rs
@@ -20,10 +23,12 @@ arepo=0
 
 
 #base='/home/donghia/MGroups/output_arms/'
-base='/home/donghia/MWbarnogas/Run/medres/output/'
+#base='/home/donghia/MWbarnogas/Run/medres/output/'
+base='./data/'
 
 tname=" "
-output_dir="/home/donghia/MWbarnogas/Run/medres/output/movie/faceon/"
+#output_dir="/home/donghia/MWbarnogas/Run/medres/output/movie/faceon/"
+output_dir="./analysis/"
 #base='/n/hernquistfs1/mvogelsberger/projects/spirals/perturbers/RUN_c9_mc_pro_finite_short/output/'
 #tname="MCs prograde short"
 #output_dir="./output/c9_mc_pro_finite_short/"
@@ -42,7 +47,7 @@ output_dir="/home/donghia/MWbarnogas/Run/medres/output/movie/faceon/"
 snapbase='snap_'
 
 #list of snapshots
-nums=np.arange(150,152,1)
+nums=np.arange(582)
 
 
 #plot does for MCs (1=on)
@@ -107,7 +112,7 @@ for i in range(0,len(nums)):
 	#####commented: how to read in hdf5
 	filename=base+snapbase+str(num).zfill(3)+".hdf5"	
 	#filename=base+"snapdir_"+str(num).zfill(3)+"/"+snapbase+str(num).zfill(3)
-        print filename 
+        print( filename )
 	with h5py.File(filename,"r") as filename:
 	#with h5py.File("/home/donghia/MW_model_x20_f20_VC16hd_new_snapshot_306.hdf5","r") as filename:
 
@@ -125,16 +130,16 @@ for i in range(0,len(nums)):
 		myMasses = np.array(att.__getitem__("MassTable"))
 		myDiskMass = myMasses[2]
                 myBulgeMass = myMasses[3] 
-		print 'Processing ', filename		
+		print( 'Processing ', filename		)
 
 	###here after the indentation of the 'with' block is done, python will close the hdf5 file correctly and safe
 
 	#head=rs.snapshot_header(filename)
-	#print "time = ", head.time
-	print "time = ", myTime
-	print "length of coordinate of disk is ", diskCoord.shape
-        print "length of coordinate of bulge is ", bulgeCoord.shape
-	print "myDiskMass is ", myMasses[2], myMasses[3]
+	#print( "time = ", head.time)
+	print( "time = ", myTime)
+	print( "length of coordinate of disk is ", diskCoord.shape)
+        print( "length of coordinate of bulge is ", bulgeCoord.shape)
+	print( "myDiskMass is ", myMasses[2], myMasses[3])
 
 
 	#pos=rs.read_block(filename, "POS ", parttype=2).astype('float64')
@@ -165,7 +170,7 @@ for i in range(0,len(nums)):
         ycm = np.median(py)
         zcm = np.median(pz)
 
-        print xcm, ycm, zcm, len(px), len(py), len(pz)
+        print( xcm, ycm, zcm, len(px), len(py), len(pz))
 
         px = px - xcm
         py = py - ycm
@@ -178,7 +183,7 @@ for i in range(0,len(nums)):
         xnew = np.median(px)
         ynew = np.median(py)
         znew = np.median(pz) 
-        print xnew, ynew, znew, len(px), len(py), len(pz)
+        print( xnew, ynew, znew, len(px), len(py), len(pz))
 
         #pmax=0.0
         #pmin=0.0
@@ -189,7 +194,7 @@ for i in range(0,len(nums)):
         #        pz[pz<pmin]=pmin
         #        pz[pz>pmax]=pmax
 
-        #print "min/max of log10(histogram) = ", pmin, pmax
+        #print( "min/max of log10(histogram) = ", pmin, pmax)
         #vx=vel[:,xax]
         #vy=vel[:,yax]	
 	#vz=vel[:,zax]
@@ -224,15 +229,15 @@ for i in range(0,len(nums)):
         z=np.polyfit(rmid, np.log(meanh), 1)
 	Rs=-1/z[0]
 	p = np.poly1d(z)
-	print "Rs = ", Rs, mass 
+	print( "Rs = ", Rs, mass )
 
 	#calculate residuals
 	for i in range(0,BINS_r):
 		#h[i,:]=(h[i,:] - np.exp(p(rmid[i]))) / np.exp(p(rmid[i]))
 		h[i,:]=(h[i,:] - h[i,:].mean()) / (h[i,:].mean())
         
-        #print mass.dtype
-        #print "xxxxxx", mass.shape, px.shape
+        #print( mass.dtype)
+        #print( "xxxxxx", mass.shape, px.shape)
 	#construct mass-weighted histograms
 	#Z,x,y=np.histogram2d(px/Rs,py/Rs, range=[[-lengthX,lengthX],[-lengthY,lengthY]], weights=mass, bins=BINS, normed=True)
 	Z,x,y=np.histogram2d(px/Rs,py/Rs, range=[[-lengthX/Rs,lengthX/Rs],[-lengthY/Rs,lengthY/Rs]], bins=BINS, normed=True)
@@ -249,7 +254,7 @@ for i in range(0,len(nums)):
 		Z[Z<Zmin]=Zmin
 		Z[Z>Zmax]=Zmax
 
-	print "min/max of log10(histogram) = ", Zmin, Zmax
+	print( "min/max of log10(histogram) = ", Zmin, Zmax)
 
 
 
@@ -275,7 +280,7 @@ for i in range(0,len(nums)):
         ##add on top particle type 3
         ##kindex=(px/(2*rh)<1.03) & (px/(2*rh)>0.97) & (py/(2*rh)>0.97) & (py/(2*rh)<1.03)  
        # kindex=(r>8.0) & (r<8.2) & (theta>2.45) & (theta<5.5)  
-       # print "UFF", len(kindex)
+       # print( "UFF", len(kindex))
        # urnew=ur[kindex]-vx0
 	# vtnew=vt[kindex]-vy0
         ##im=ax.imshow(h.T, vmin=-0.75, vmax=0.75, origin='lower',interpolation='nearest',extent=[-300, 300, -300, 300], cmap=cm.get_cmap('jet'))
@@ -289,7 +294,7 @@ for i in range(0,len(nums)):
 
 #	if (head.npart[2] > 0) & (mc_flag):
 #                if (r.all < rhigh) & (r.all > rlow) & (theta.all < thetahigh) & (theta.all > thetalow):
-#                    print r,theta 
+#                    print( r,theta )
 #                    poss=rs.read_block(filename, "POS ", parttype=2, arepo=arepo).astype('float64')
 #                    pxx=poss[:xax]
 #                    pyy=poss[:yay]
@@ -303,14 +308,14 @@ for i in range(0,len(nums)):
         	#ax.scatter(pxx/rh,pyy/rh,s=mc_s,c='w',facecolors='black',edgecolors='black')
 	        #ax.axis([-lengthX,lengthX,-lengthY,lengthY])
 	##if counter==len(nums1)-1:
-        #print 'nnn', len(urnew)
+        #print( 'nnn', len(urnew))
 
 # commento da Tenerife
 	# ax.set_xlabel('u', fontsize=18)
 	# ax.set_ylabel('v', fontsize=18)
 # fine commento
 
-        #print 'cccc', pxx,pyy 
+        #print( 'cccc', pxx,pyy )
         ax2 = fig.add_subplot(1,2,2,title="residuals")
         #im=ax.imshow(h.T, vmin=-0.75, vmax=0.75, origin='lower',interpolation='nearest',extent=[0, lengthX, -np.pi,np.pi ], cmap=cm.get_cmap('jet'))
         im2=ax2.imshow(h.T, vmin=-0.75, vmax=0.75, origin='lower',interpolation='nearest',extent=[0, lengthX/Rs, -np.pi,np.pi ], cmap=cm.get_cmap('jet'))
