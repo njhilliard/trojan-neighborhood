@@ -47,7 +47,7 @@ output_dir="./analysis/"
 snapbase='snap_'
 
 #list of snapshots
-nums=np.arange(582)
+nums=[582]
 
 
 #plot does for MCs (1=on)
