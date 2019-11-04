@@ -21,7 +21,6 @@ import conversions as co
 parttype=2
 arepo=0
 
-
 #base='/home/donghia/MGroups/output_arms/'
 #base='/home/donghia/MWbarnogas/Run/medres/output/'
 base='./data/'
@@ -264,7 +263,10 @@ for i in range(0,len(nums)):
         #ax = fig.add_subplot(1,2,1,title=tname+"  t="+str(round(head.time*co.UnitTime_in_Gyr*1000.0,1))+"Myr")
         
         ax = fig.add_subplot(1,2,1) #,title=tname+"  t="+str(round(myTime*co.UnitTime_in_Gyr*1000.0,1))+"Myr")
-        im=ax.imshow(Z.T, vmin=Zmin, vmax=Zmax, origin='lower',interpolation='nearest', extent=[-lengthX/Rs,lengthX/Rs,-lengthY/Rs,lengthY/Rs], cmap=cm.get_cmap('jet'))
+        im=ax.imshow(Z.T, vmin=Zmin, vmax=Zmax,
+                origin='lower',interpolation='nearest',
+                extent=[-lengthX/Rs,lengthX/Rs,-lengthY/Rs,lengthY/Rs],
+                cmap=cm.get_cmap('viridis'))
         ax.set_xlabel('x/Rs', fontsize=18, fontweight='bold')
         ax.set_ylabel('y/Rs',fontsize=18, fontweight='bold')
         plt.xticks(np.arange(-round(lengthX/Rs), round(lengthX/Rs), step=2), fontsize=15, fontweight='bold')
@@ -283,7 +285,7 @@ for i in range(0,len(nums)):
        # print( "UFF", len(kindex))
        # urnew=ur[kindex]-vx0
         # vtnew=vt[kindex]-vy0
-        ##im=ax.imshow(h.T, vmin=-0.75, vmax=0.75, origin='lower',interpolation='nearest',extent=[-300, 300, -300, 300], cmap=cm.get_cmap('jet'))
+        ##im=ax.imshow(h.T, vmin=-0.75, vmax=0.75, origin='lower',interpolation='nearest',extent=[-300, 300, -300, 300], cmap=cm.get_cmap('viridis'))
         # ax.scatter(urnew,vtnew,s=patch_s,c='w',facecolors='black',edgecolors='black')
         # if (head.npart[2] > 0) & (patch_flag):
         #       urnew=ur[kindex]-vx0
@@ -317,8 +319,8 @@ for i in range(0,len(nums)):
 
         #print( 'cccc', pxx,pyy )
         ax2 = fig.add_subplot(1,2,2,title="residuals")
-        #im=ax.imshow(h.T, vmin=-0.75, vmax=0.75, origin='lower',interpolation='nearest',extent=[0, lengthX, -np.pi,np.pi ], cmap=cm.get_cmap('jet'))
-        im2=ax2.imshow(h.T, vmin=-0.75, vmax=0.75, origin='lower',interpolation='nearest',extent=[0, lengthX/Rs, -np.pi,np.pi ], cmap=cm.get_cmap('jet'))
+        #im=ax.imshow(h.T, vmin=-0.75, vmax=0.75, origin='lower',interpolation='nearest',extent=[0, lengthX, -np.pi,np.pi ], cmap=cm.get_cmap('viridis'))
+        im2=ax2.imshow(h.T, vmin=-0.75, vmax=0.75, origin='lower',interpolation='nearest',extent=[0, lengthX/Rs, -np.pi,np.pi ], cmap=cm.get_cmap('viridis'))
         #add on top particle type 3
         #if (head.npart[4] > 0) & (mc_flag):
                 ##pos=rs.read_block(filename, "POS ", parttype=3, arepo=arepo).astype('float64')
