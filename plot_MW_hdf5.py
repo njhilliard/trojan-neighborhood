@@ -160,7 +160,6 @@ for i in range(0,len(nums)):
         px = np.append(px, bulgeCoord[:,xax])
         py = np.append(py, bulgeCoord[:,yax])
         pz = np.append(pz, bulgeCoord[:,zax])
-       
         
         #xcm = px.sum()/len(px)
         #ycm = py.sum()/len(py)
