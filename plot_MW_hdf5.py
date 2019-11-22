@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+### ELENA'S CODE ###
+
 import matplotlib as mpl
 #mpl.use('Agg')
 import matplotlib.pyplot as plt
